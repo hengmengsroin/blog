@@ -46400,6 +46400,12 @@ definitions:
     description: >-
       MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount
       response type.
+  hengmengsroin.blog.blog.MsgCreatePostResponse:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
   hengmengsroin.blog.blog.Params:
     type: object
     description: Params defines the parameters for the module.
