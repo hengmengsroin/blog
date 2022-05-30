@@ -17,6 +17,17 @@ const (
 	MemStoreKey = "mem_blog"
 )
 
+const (
+	// Keep track of the index of posts
+	PostKey      = "Post-value-"
+	PostCountKey = "Post-count-"
+)
+
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	CommentKey      = "Comment-value-"
+	CommentCountKey = "Comment-count-"
+)
