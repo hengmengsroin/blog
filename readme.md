@@ -50,3 +50,65 @@ curl https://get.ignite.com/hengmengsroin/blog@latest! | sudo bash
 - [Ignite CLI docs](https://docs.ignite.com)
 - [Cosmos SDK docs](https://docs.cosmos.network)
 - [Developer Chat](https://discord.gg/ignite)
+
+
+# Runing a node
+
+### Initialize the Chain
+```
+./blogd init validator1 --chain-id blog
+```
+
+### Adding keys to the keyring
+```
+./blogd keys add my_validator --keyring-backend test
+
+MY_VALIDATOR_ADDRESS=$(./blogd keys show my_validator -a --keyring-backend test)
+```
+### Adding Genesis Accounts
+
+```
+./blogd add-genesis-account $MY_VALIDATOR_ADDRESS 100000000000stake
+```
+
+### Create a gentx.
+```
+./blogd gentx my_validator 100000000stake --chain-id blog --keyring-backend test
+```
+
+### Add the gentx to the genesis file.
+```
+./blogd collect-gentxs
+```
+
+### run localnet
+```
+./blogd start
+```
+### show node id
+```
+./blogd tendermint show-node-id
+```
+# Interacting with the Node
+```
+./blogd query bank balances <address>
+```
+
+```
+./blogd keys add recipient --keyring-backend test
+```
+```
+RECIPIENT=$(./blogd keys show recipient -a --keyring-backend test)
+```
+```
+./blogd tx bank send $MY_VALIDATOR_ADDRESS $RECIPIENT 1000000stake --chain-id blog --keyring-backend test
+# Check that the recipient account did receive the tokens.
+./blogd query bank balances $RECIPIENT --chain-id blog
+```
+
+```
+./blogd tx staking delegate $(./blogd keys show my_validator --bech val -a --keyring-backend test) 500stake --from recipient --chain-id blog --keyring-backend test
+
+# Query the total delegations to `validator`.
+./blogd query staking delegations-to $(simd keys show my_validator --bech val -a --keyring-backend test) --chain-id blog
+```
